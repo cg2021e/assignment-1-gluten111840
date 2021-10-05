@@ -61,19 +61,7 @@ gl.linkProgram(shaderProgram);
 let coords = gl.getAttribLocation(shaderProgram, "a_position");
 var colorLocation = gl.getAttribLocation(shaderProgram, "a_color");
 
-// Generate warna untuk setiap
 var color = [...c_toples, ...c_toples];
-// for (let i = 0; i < vertices.length/3; i++) {
-//     let r = Math.random()/2 + 0.45;
-//     let g = Math.random()/2 + 0.45;
-//     let b = Math.random()/2 + 0.45;
-//     for (let j = 0; j < 3; j++) {
-//         color.push(r);
-//         color.push(g);
-//         color.push(b);
-//         color.push(1);
-//     }
-// }
 
 function drawScene() {
     gl.useProgram(shaderProgram);
