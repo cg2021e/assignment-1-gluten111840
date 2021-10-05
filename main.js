@@ -15,9 +15,17 @@ function createShader(gl, type, source) {
 let canvas = document.getElementById('myCanvas');
 let gl = canvas.getContext('experimental-webgl');
 
+let gambar_kanan = [
+    ...toples_kanan, ...tutup_luar_kanan_bawah, ...tutup_luar_kanan, ...tutup_dalam_kanan1, ...tutup_dalam_kanan2
+]
+// Offset gambar kanan ke bawah 1.5
+for (let vert = 0; vert < gambar_kanan.length; vert += 2){
+    gambar_kanan[vert + 1] -= 1.5
+}
+
 let vertices = [
     ...toples_kiri, ...tutup_luar_kiri_bawah, ...tutup_luar_kiri, ...tutup_dalam_kiri1, ...tutup_dalam_kiri2, 
-    ...toples_kanan, ...tutup_luar_kanan_bawah, ...tutup_luar_kanan, ...tutup_dalam_kanan1, ...tutup_dalam_kanan2
+    ...gambar_kanan 
 ];
 
 
@@ -54,18 +62,18 @@ let coords = gl.getAttribLocation(shaderProgram, "a_position");
 var colorLocation = gl.getAttribLocation(shaderProgram, "a_color");
 
 // Generate warna untuk setiap
-var color = [];
-for (let i = 0; i < vertices.length/3; i++) {
-    let r = Math.random()/2 + 0.45;
-    let g = Math.random()/2 + 0.45;
-    let b = Math.random()/2 + 0.45;
-    for (let j = 0; j < 3; j++) {
-        color.push(r);
-        color.push(g);
-        color.push(b);
-        color.push(1);
-    }
-}
+var color = [...c_toples, ...c_toples];
+// for (let i = 0; i < vertices.length/3; i++) {
+//     let r = Math.random()/2 + 0.45;
+//     let g = Math.random()/2 + 0.45;
+//     let b = Math.random()/2 + 0.45;
+//     for (let j = 0; j < 3; j++) {
+//         color.push(r);
+//         color.push(g);
+//         color.push(b);
+//         color.push(1);
+//     }
+// }
 
 function drawScene() {
     gl.useProgram(shaderProgram);
@@ -89,4 +97,30 @@ function drawScene() {
     gl.drawArrays(gl.TRIANGLES, 0, vertices.length/2);
 }
 
-drawScene();
+let isGoingUp = true;
+let delta = 0;
+animate();
+
+function animate (){
+    let increment = 0.0042;
+    delta += increment;
+    if (delta > 2){
+        delta = 0;
+        isGoingUp = !isGoingUp;
+    }
+    if (!isGoingUp){
+        increment *= -1;
+    }
+    for (vert = 0; vert < gambar_kanan.length; vert += 2){
+        gambar_kanan[vert + 1] += increment;
+    }
+    
+    vertices = [
+        ...toples_kiri, ...tutup_luar_kiri_bawah, ...tutup_luar_kiri, ...tutup_dalam_kiri1, ...tutup_dalam_kiri2, 
+        ...gambar_kanan 
+    ]; 
+
+    drawScene();
+    requestAnimationFrame(animate);
+}
+requestAnimationFrame(animate);
