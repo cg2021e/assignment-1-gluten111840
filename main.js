@@ -16,7 +16,8 @@ let canvas = document.getElementById('myCanvas');
 let gl = canvas.getContext('experimental-webgl');
 
 let vertices = [
-    ...tutup_luar_kiri, ...tutup_luar_kanan
+    ...toples_kiri, ...tutup_luar_kiri_bawah, ...tutup_luar_kiri, ...tutup_dalam_kiri1, ...tutup_dalam_kiri2, 
+    ...toples_kanan, ...tutup_luar_kanan_bawah, ...tutup_luar_kanan, ...tutup_dalam_kanan1, ...tutup_dalam_kanan2
 ];
 
 
