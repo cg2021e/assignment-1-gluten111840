@@ -54,7 +54,6 @@ function main() {
         uniform vec3 uViewerPosition;
         void main() {
             vec3 ambient = uLightConstant * uAmbientIntensity;
-            // vec3 lightDirection = uLightDirection;
             vec3 lightDirection = uLightPosition - vPosition;
             vec3 normalizedLight = normalize(lightDirection);  // [2., 0., 0.] becomes a unit vector [1., 0., 0.]
             vec3 normalizedNormal = normalize(uNormalModel * vNormal);
@@ -166,12 +165,12 @@ function main() {
     // Define the lighting and shading
     var uLightConstant = gl.getUniformLocation(shaderProgram, "uLightConstant");
     var uAmbientIntensity = gl.getUniformLocation(shaderProgram, "uAmbientIntensity");
-    gl.uniform3fv(uLightConstant, [1.0, 0.5, 1.0]);   // orange light
-    gl.uniform1f(uAmbientIntensity, 0.242) // light intensity: 40%
+    gl.uniform3fv(uLightConstant, [1.0, 1.0, 1.0]);   // orange light
+    gl.uniform1f(uAmbientIntensity, 0.242) // light intensity: 42 (NRP) + 200 = 242
     // var uLightDirection = gl.getUniformLocation(shaderProgram, "uLightDirection");
     // gl.uniform3fv(uLightDirection, [2.0, 0.0, 0.0]);    // light comes from the right side
     var uLightPosition = gl.getUniformLocation(shaderProgram, "uLightPosition");
-    gl.uniform3fv(uLightPosition, [1.0, 1.0, 1.0]);
+    gl.uniform3fv(uLightPosition, [0.0, 0.0, 0.0]);
     var uNormalModel = gl.getUniformLocation(shaderProgram, "uNormalModel");
     var uViewerPosition = gl.getUniformLocation(shaderProgram, "uViewerPosition");
     gl.uniform3fv(uViewerPosition, camera);
