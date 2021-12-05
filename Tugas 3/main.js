@@ -199,14 +199,14 @@ function main() {
         if(event.keyCode == 87) {
             for(let i=0;i<y_cube.length;i+=10) {
                 vertices[i+1] += 0.042;
-                lightPosition[1] += 0.042 * 2/3;
+                lightPosition[1] += 0.042 * 0.06;
                 console.log("Test")
             }
         }
         else if(event.keyCode == 83) {
             for(let i=0;i<y_cube.length;i+=10) {
                 vertices[i+1] -= 0.042;
-                lightPosition[1] -= 0.042 * 2/3;
+                lightPosition[1] -= 0.042 * 0.06;
             }
         }
         else if(event.keyCode == 65) {
