@@ -143,7 +143,7 @@ function main() {
     var aShininessConstant = gl.getAttribLocation(shaderProgram, "aShininessConstant");
     gl.vertexAttribPointer(
         aShininessConstant, 
-        3, 
+        1, 
         gl.FLOAT, 
         false, 
         10 * Float32Array.BYTES_PER_ELEMENT, 
