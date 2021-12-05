@@ -187,7 +187,8 @@ function main() {
     // var uLightDirection = gl.getUniformLocation(shaderProgram, "uLightDirection");
     // gl.uniform3fv(uLightDirection, [2.0, 0.0, 0.0]);    // light comes from the right side
     var uLightPosition = gl.getUniformLocation(shaderProgram, "uLightPosition");
-    gl.uniform3fv(uLightPosition, [0.0, 0.0, 0.0]);
+    var lightPosition = [0.0, 0.0, 0.0];
+    gl.uniform3fv(uLightPosition, lightPosition);
     var uNormalModel = gl.getUniformLocation(shaderProgram, "uNormalModel");
     var uViewerPosition = gl.getUniformLocation(shaderProgram, "uViewerPosition");
     gl.uniform3fv(uViewerPosition, camera);
@@ -196,22 +197,48 @@ function main() {
 
     function onKeyPressed(event) {
         if(event.keyCode == 87) {
-            for(let i=0;i<=y_cube.length;i+=10) {
-                vertices[i+1] += 0.242;
+            for(let i=0;i<y_cube.length;i+=10) {
+                vertices[i+1] += 0.042;
+                lightPosition[1] += 0.042 * 2/3;
                 console.log("Test")
             }
         }
         else if(event.keyCode == 83) {
-            for(let i=0;i<=y_cube.length;i+=10) {
-                vertices[i+1] -= 0.242;
+            for(let i=0;i<y_cube.length;i+=10) {
+                vertices[i+1] -= 0.042;
+                lightPosition[1] -= 0.042 * 2/3;
             }
+        }
+        else if(event.keyCode == 65) {
+            camera[0] -= 0.042;
+            camNow[0] -= 0.042;
+            glMatrix.mat4.lookAt(
+                view,
+                camera,      // camera position
+                camNow,      // the point where camera looks at
+                [0, 1, 0]       // up vector of the camera
+            );
+            gl.uniformMatrix4fv(uView, false, view);
+        }
+        else if(event.keyCode == 68) {
+            camera[0] += 0.042;
+            camNow[0] += 0.042;
+            glMatrix.mat4.lookAt(
+                view,
+                camera,      // camera position
+                camNow,      // the point where camera looks at
+                [0, 1, 0]       // up vector of the camera
+            );
+            gl.uniformMatrix4fv(uView, false, view);
         }
     }
 
     document.addEventListener("keydown",onKeyPressed,false);
 
     function render() {
-        
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+        gl.uniform3fv(uLightPosition, lightPosition);
         // Init the model matrix
         var model = glMatrix.mat4.create();
         gl.uniformMatrix4fv(uModel, false, model);
