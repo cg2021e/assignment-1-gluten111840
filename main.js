@@ -193,52 +193,7 @@ function main() {
     var uViewerPosition = gl.getUniformLocation(shaderProgram, "uViewerPosition");
     gl.uniform3fv(uViewerPosition, camera);
 
-    let y_cube = [...cubeLight];
-
-    function onKeyPressed(event) {
-        if(event.keyCode == 87) {
-            for(let i=0;i<y_cube.length;i+=10) {
-                vertices[i+1] += 0.042;
-                lightPosition[1] += 0.042 * 0.06;
-                console.log("Test")
-            }
-        }
-        else if(event.keyCode == 83) {
-            for(let i=0;i<y_cube.length;i+=10) {
-                vertices[i+1] -= 0.042;
-                lightPosition[1] -= 0.042 * 0.06;
-            }
-        }
-        else if(event.keyCode == 65) {
-            camera[0] -= 0.042;
-            camNow[0] -= 0.042;
-            glMatrix.mat4.lookAt(
-                view,
-                camera,      // camera position
-                camNow,      // the point where camera looks at
-                [0, 1, 0]       // up vector of the camera
-            );
-            gl.uniformMatrix4fv(uView, false, view);
-        }
-        else if(event.keyCode == 68) {
-            camera[0] += 0.042;
-            camNow[0] += 0.042;
-            glMatrix.mat4.lookAt(
-                view,
-                camera,      // camera position
-                camNow,      // the point where camera looks at
-                [0, 1, 0]       // up vector of the camera
-            );
-            gl.uniformMatrix4fv(uView, false, view);
-        }
-    }
-
-    document.addEventListener("keydown",onKeyPressed,false);
-
     function render() {
-        gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
-        gl.uniform3fv(uLightPosition, lightPosition);
         // Init the model matrix
         var model = glMatrix.mat4.create();
         gl.uniformMatrix4fv(uModel, false, model);
