@@ -6,11 +6,11 @@ function main() {
     // Define vertices data consisting of position and color properties
 
     var vertices = [
-        ...cubeLight, ...toplesKananBody, ...tutupToplesKanan, ...toplesKiriBody, ...tutupToplesKiri,
+        ...cubeLight, ...toplesKananBody, ...tutupToplesKanan, ...toplesKiriBody, ...tutupToplesKiri, ...vec_plane,
     ];
 
     var indices = [
-        ...indices_cl, ...indices_tKaB, ...indices_tTKa, ...indices_tKiB, ...indices_tTKi,
+        ...indices_cl, ...indices_tKaB, ...indices_tTKa, ...indices_tKiB, ...indices_tTKi, ...ind_plane,
     ];
 
     // Create a linked-list for storing the vertices data
